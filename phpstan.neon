@@ -1,0 +1,22 @@
+parameters:
+  level: 8
+  paths:
+    - src
+    - tests
+  inferPrivatePropertyTypeFromConstructor: true
+  ignoreErrors:
+    -
+      message: '#Parameter \#1 \$names of method .+\\Configuration::withNames\(\) expects array<string>#'
+      path: tests/ConfigurationTest.php
+    -
+      message: '#Parameter \#1 \$sshKeys of method .+\\Configuration::withSshKeys\(\) expects array<int>#'
+      path: tests/ConfigurationTest.php
+    -
+      message: '#Parameter \#1 \$volumes of method .+\\Configuration::withVolumes\(\) expects array<string>#'
+      path: tests/ConfigurationTest.php
+    -
+      message: '#Parameter \#1 \$tags of method .+\\Configuration::withTags\(\) expects array<string>#'
+      path: tests/ConfigurationTest.php
+    -
+      message: '#Parameter \#8 \$sshKeys of class .+\\Configuration constructor expects array<int>#'
+      path: tests/FactoryTest.php
