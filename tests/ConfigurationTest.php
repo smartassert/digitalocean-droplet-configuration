@@ -77,7 +77,7 @@ class ConfigurationTest extends TestCase
             ],
             'no valid' => [
                 'configuration' => $factory->create()->withSshKeys([
-                    'string',
+                    M_PI,
                     true,
                     new \stdClass(),
                 ]),
