@@ -31,7 +31,7 @@ class Factory
     private const DEFAULT_TAGS = [];
 
     /**
-     * @param array<mixed> $defaults
+     * @param array<string, mixed> $defaults
      */
     public function __construct(
         private array $defaults = [
@@ -51,27 +51,35 @@ class Factory
     ) {
     }
 
-    public function create(): Configuration
+    /**
+     * @param array<string, mixed> $values
+     */
+    public function create(array $values = []): Configuration
     {
+        $data = array_merge($this->defaults, $values);
+
         return new Configuration(
-            $this->getStringValues(self::KEY_NAMES),
-            $this->getStringValue(self::KEY_REGION),
-            $this->getStringValue(self::KEY_SIZE),
-            $this->getStringValue(self::KEY_IMAGE),
-            $this->getBooleanValue(self::KEY_BACKUPS),
-            $this->getBooleanValue(self::KEY_IPV6),
-            $this->getVpcUuidValue(),
-            $this->getSshKeyValues(),
-            $this->getStringValue(self::KEY_USER_DATA),
-            $this->getBooleanValue(self::KEY_MONITORING, true),
-            $this->getStringValues(self::KEY_VOLUMES),
-            $this->getStringValues(self::KEY_TAGS),
+            $this->getStringValues($data, self::KEY_NAMES),
+            $this->getStringValue($data, self::KEY_REGION),
+            $this->getStringValue($data, self::KEY_SIZE),
+            $this->getStringValue($data, self::KEY_IMAGE),
+            $this->getBooleanValue($data, self::KEY_BACKUPS),
+            $this->getBooleanValue($data, self::KEY_IPV6),
+            $this->getVpcUuidValue($data),
+            $this->getSshKeyValues($data),
+            $this->getStringValue($data, self::KEY_USER_DATA),
+            $this->getBooleanValue($data, self::KEY_MONITORING, true),
+            $this->getStringValues($data, self::KEY_VOLUMES),
+            $this->getStringValues($data, self::KEY_TAGS),
         );
     }
 
-    private function getVpcUuidValue(): string | bool
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function getVpcUuidValue(array $data): string | bool
     {
-        $value = $this->defaults[self::KEY_VPC_UUID] ?? false;
+        $value = $data[self::KEY_VPC_UUID] ?? false;
 
         if (is_bool($value)) {
             return $value;
@@ -85,11 +93,13 @@ class Factory
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @return string[]
      */
-    private function getStringValues(string $key): array
+    private function getStringValues(array $data, string $key): array
     {
-        $values = $this->getValues($key);
+        $values = $this->getValues($data, $key);
 
         return array_filter($values, function ($item) {
             return is_string($item);
@@ -97,11 +107,13 @@ class Factory
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @return array<int|string>
      */
-    private function getSshKeyValues(): array
+    private function getSshKeyValues(array $data): array
     {
-        $values = $this->getValues(self::KEY_SSH_KEYS);
+        $values = $this->getValues($data, self::KEY_SSH_KEYS);
 
         return array_filter($values, function ($item) {
             return is_int($item) || is_string($item);
@@ -109,18 +121,23 @@ class Factory
     }
 
     /**
+     * @param array<string, mixed> $data
+     *
      * @return array<mixed>
      */
-    private function getValues(string $key): array
+    private function getValues(array $data, string $key): array
     {
-        $values = $this->defaults[$key] ?? [];
+        $values = $data[$key] ?? [];
 
         return is_array($values) ? $values : [];
     }
 
-    private function getStringValue(string $key): string
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function getStringValue(array $data, string $key): string
     {
-        $value = $this->defaults[$key] ?? '';
+        $value = $data[$key] ?? '';
 
         if (is_string($value)) {
             return $value;
@@ -133,9 +150,12 @@ class Factory
         return '';
     }
 
-    private function getBooleanValue(string $key, bool $default = false): bool
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function getBooleanValue(array $data, string $key, bool $default = false): bool
     {
-        $value = $this->defaults[$key] ?? '';
+        $value = $data[$key] ?? '';
 
         if (is_bool($value)) {
             return $value;
