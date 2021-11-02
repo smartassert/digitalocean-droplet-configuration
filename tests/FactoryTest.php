@@ -150,6 +150,42 @@ class FactoryTest extends TestCase
                     ['tag3'],
                 ),
             ],
+            'default, no values should create monitoring=true' => [
+                'factory' => new Factory(),
+                'values' => [],
+                'expectedConfiguration' => new Configuration(
+                    [],
+                    '',
+                    '',
+                    '',
+                    false,
+                    false,
+                    false,
+                    [],
+                    '',
+                    true,
+                    [],
+                    [],
+                ),
+            ],
+            'empty default, no values should create monitoring=true' => [
+                'factory' => new Factory([]),
+                'values' => [],
+                'expectedConfiguration' => new Configuration(
+                    [],
+                    '',
+                    '',
+                    '',
+                    false,
+                    false,
+                    false,
+                    [],
+                    '',
+                    true,
+                    [],
+                    [],
+                ),
+            ],
         ];
     }
 }

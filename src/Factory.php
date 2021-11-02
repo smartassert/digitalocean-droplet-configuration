@@ -155,7 +155,7 @@ class Factory
      */
     private function getBooleanValue(array $data, string $key, bool $default = false): bool
     {
-        $value = $data[$key] ?? '';
+        $value = $data[$key] ?? null;
 
         if (is_bool($value)) {
             return $value;
