@@ -198,4 +198,18 @@ class ConfigurationTest extends TestCase
         $configuration = $configuration->addTags(['one']);
         self::assertSame(['one', 'two'], $configuration->getTags());
     }
+
+    public function testAppendUserData(): void
+    {
+        $factory = new Factory();
+        $configuration = $factory->create();
+
+        self::assertSame('', $configuration->getUserData());
+
+        $configuration = $configuration->appendUserData('line 1');
+        self::assertSame('line 1', $configuration->getUserData());
+
+        $configuration = $configuration->appendUserData("\n" . 'line 2');
+        self::assertSame('line 1' . "\n" . 'line 2', $configuration->getUserData());
+    }
 }
