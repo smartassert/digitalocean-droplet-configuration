@@ -188,6 +188,14 @@ class Configuration
         return $new;
     }
 
+    public function appendUserData(string $userData): self
+    {
+        $new = clone $this;
+        $new->userData .= $userData;
+
+        return $new;
+    }
+
     public function withMonitoring(bool $monitoring): self
     {
         $new = clone $this;
