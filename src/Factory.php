@@ -97,14 +97,14 @@ class Factory
     }
 
     /**
-     * @return int[]
+     * @return array<int|string>
      */
     private function getSshKeyValues(): array
     {
         $values = $this->getValues(self::KEY_SSH_KEYS);
 
         return array_filter($values, function ($item) {
-            return is_int($item);
+            return is_int($item) || is_string($item);
         });
     }
 
