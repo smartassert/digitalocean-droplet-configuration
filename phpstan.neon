@@ -6,9 +6,6 @@ parameters:
   inferPrivatePropertyTypeFromConstructor: true
   ignoreErrors:
     -
-      message: '#Result of \|\| is always true#'
-      path: src/Configuration.php
-    -
       message: '#Parameter \#1 \$names of method .+\\Configuration::withNames\(\) expects array<string>#'
       path: tests/ConfigurationTest.php
     -

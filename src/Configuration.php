@@ -5,18 +5,18 @@ namespace SmartAssert\DigitalOceanDropletConfiguration;
 class Configuration
 {
     /**
-     * @param string[]          $names
-     * @param string            $region
-     * @param string            $size
-     * @param string            $image
-     * @param bool              $backups
-     * @param bool              $ipv6
-     * @param bool|string       $vpcUuid
-     * @param array<int|string> $sshKeys
-     * @param string            $userData
-     * @param bool              $monitoring
-     * @param string[]          $volumes
-     * @param string[]          $tags
+     * @param string[]    $names
+     * @param string      $region
+     * @param string      $size
+     * @param string      $image
+     * @param bool        $backups
+     * @param bool        $ipv6
+     * @param bool|string $vpcUuid
+     * @param int[]       $sshKeys
+     * @param string      $userData
+     * @param bool        $monitoring
+     * @param string[]    $volumes
+     * @param string[]    $tags
      */
     public function __construct(
         private array $names,
@@ -246,12 +246,12 @@ class Configuration
     }
 
     /**
-     * @param array<int|string> $sshKeys
+     * @param int[] $sshKeys
      */
     public function setSshKeys(array $sshKeys): void
     {
         $sshKeys = array_filter($sshKeys, function ($item) {
-            return is_int($item) || is_string($item);
+            return is_int($item);
         });
 
         $this->sshKeys = array_unique($sshKeys);
