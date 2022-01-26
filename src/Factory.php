@@ -109,14 +109,14 @@ class Factory
     /**
      * @param array<string, mixed> $data
      *
-     * @return array<int|string>
+     * @return int[]
      */
     private function getSshKeyValues(array $data): array
     {
         $values = $this->getValues($data, self::KEY_SSH_KEYS);
 
         return array_filter($values, function ($item) {
-            return is_int($item) || is_string($item);
+            return is_int($item);
         });
     }
 
