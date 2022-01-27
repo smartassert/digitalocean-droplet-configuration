@@ -25,7 +25,7 @@ class Configuration
         private string $image,
         private bool $backups,
         private bool $ipv6,
-        private string | bool $vpcUuid,
+        private string|bool $vpcUuid,
         private array $sshKeys,
         private string $userData,
         private bool $monitoring,
@@ -71,7 +71,7 @@ class Configuration
         return $this->ipv6;
     }
 
-    public function getVpcUuid(): string | bool
+    public function getVpcUuid(): string|bool
     {
         return $this->vpcUuid;
     }
@@ -161,7 +161,7 @@ class Configuration
         return $new;
     }
 
-    public function withVpcUuid(string | bool $vpcUuid): self
+    public function withVpcUuid(string|bool $vpcUuid): self
     {
         $new = clone $this;
         $new->vpcUuid = $vpcUuid;

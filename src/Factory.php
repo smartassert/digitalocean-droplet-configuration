@@ -77,7 +77,7 @@ class Factory
     /**
      * @param array<string, mixed> $data
      */
-    private function getVpcUuidValue(array $data): string | bool
+    private function getVpcUuidValue(array $data): string|bool
     {
         $value = $data[self::KEY_VPC_UUID] ?? false;
 
