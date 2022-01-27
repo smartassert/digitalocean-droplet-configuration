@@ -77,7 +77,7 @@ class Configuration
     }
 
     /**
-     * @return array<int|string>
+     * @return int[]
      */
     public function getSshKeys(): array
     {
