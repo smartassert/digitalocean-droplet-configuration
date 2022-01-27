@@ -13,7 +13,7 @@ class ConfigurationTest extends TestCase
     /**
      * @dataProvider getNamesDataProvider
      *
-     * @param string[] $expectedNames
+     * @param array<mixed> $expectedNames
      */
     public function testGetNames(Configuration $configuration, array $expectedNames): void
     {
