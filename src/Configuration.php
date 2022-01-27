@@ -111,7 +111,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $names
+     * @param array<mixed> $names
      */
     public function withNames(array $names): self
     {
@@ -170,7 +170,7 @@ class Configuration
     }
 
     /**
-     * @param int[] $sshKeys
+     * @param array<mixed> $sshKeys
      */
     public function withSshKeys(array $sshKeys): self
     {
@@ -205,7 +205,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $volumes
+     * @param array<mixed> $volumes
      */
     public function withVolumes(array $volumes): self
     {
@@ -216,7 +216,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $tags
+     * @param array<mixed> $tags
      */
     public function withTags(array $tags): self
     {
@@ -246,7 +246,7 @@ class Configuration
     }
 
     /**
-     * @param int[] $sshKeys
+     * @param array<mixed> $sshKeys
      */
     public function setSshKeys(array $sshKeys): void
     {
@@ -258,7 +258,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $volumes
+     * @param array<mixed> $volumes
      */
     public function setVolumes(array $volumes): void
     {
@@ -270,7 +270,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $tags
+     * @param array<mixed> $tags
      */
     public function setTags(array $tags): void
     {
@@ -282,7 +282,7 @@ class Configuration
     }
 
     /**
-     * @param string[] $names
+     * @param array<mixed> $names
      */
     private function setNames(array $names): void
     {
