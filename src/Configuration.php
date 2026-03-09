@@ -11,21 +11,29 @@ class Configuration
      */
     public function __construct(
         private string $name,
-        private string $region,
+        private ?string $region,
         private string $size,
         private string $image,
-        private bool $backups,
-        private bool $ipv6,
-        private bool|string $vpcUuid,
-        private array $sshKeys,
-        private string $userData,
-        private bool $monitoring,
-        private array $volumes,
-        private array $tags,
+        private ?bool $backups,
+        private ?bool $ipv6,
+        private ?string $vpcUuid,
+        private ?array $sshKeys,
+        private ?string $userData,
+        private ?bool $monitoring,
+        private ?array $volumes,
+        private ?array $tags,
     ) {
-        $this->setSshKeys($sshKeys);
-        $this->setVolumes($volumes);
-        $this->setTags($tags);
+        if (is_array($sshKeys)) {
+            $this->setSshKeys($sshKeys);
+        }
+
+        if (is_array($volumes)) {
+            $this->setVolumes($volumes);
+        }
+
+        if (is_array($tags)) {
+            $this->setTags($tags);
+        }
     }
 
     public function getName(): string
@@ -33,7 +41,7 @@ class Configuration
         return $this->name;
     }
 
-    public function getRegion(): string
+    public function getRegion(): ?string
     {
         return $this->region;
     }
@@ -48,51 +56,51 @@ class Configuration
         return $this->image;
     }
 
-    public function getBackups(): bool
+    public function getBackups(): ?bool
     {
         return $this->backups;
     }
 
-    public function getIpv6(): bool
+    public function getIpv6(): ?bool
     {
         return $this->ipv6;
     }
 
-    public function getVpcUuid(): bool|string
+    public function getVpcUuid(): ?string
     {
         return $this->vpcUuid;
     }
 
     /**
-     * @return int[]
+     * @return null|int[]
      */
-    public function getSshKeys(): array
+    public function getSshKeys(): ?array
     {
         return $this->sshKeys;
     }
 
-    public function getUserData(): string
+    public function getUserData(): ?string
     {
         return $this->userData;
     }
 
-    public function getMonitoring(): bool
+    public function getMonitoring(): ?bool
     {
         return $this->monitoring;
     }
 
     /**
-     * @return string[]
+     * @return null|string[]
      */
-    public function getVolumes(): array
+    public function getVolumes(): ?array
     {
         return $this->volumes;
     }
 
     /**
-     * @return string[]
+     * @return null|string[]
      */
-    public function getTags(): array
+    public function getTags(): ?array
     {
         return $this->tags;
     }
@@ -145,7 +153,7 @@ class Configuration
         return $new;
     }
 
-    public function withVpcUuid(bool|string $vpcUuid): self
+    public function withVpcUuid(string $vpcUuid): self
     {
         $new = clone $this;
         $new->vpcUuid = $vpcUuid;
@@ -215,10 +223,14 @@ class Configuration
      */
     public function addTags(array $tags): self
     {
-        $new = clone $this;
-        $tags = array_merge($this->tags, $tags);
+        $newTags = $tags;
+        if (null !== $this->tags) {
+            $newTags = array_merge($this->tags, $tags);
+        }
 
-        return $new->withTags($tags);
+        $new = clone $this;
+
+        return $new->withTags($newTags);
     }
 
     public function setBackups(bool $backups): self
@@ -238,7 +250,10 @@ class Configuration
             return is_int($item);
         });
 
-        $this->sshKeys = array_unique($sshKeys);
+        $sshKeys = array_unique($sshKeys);
+        $sshKeys = [] === $sshKeys ? null : $sshKeys;
+
+        $this->sshKeys = $sshKeys;
     }
 
     /**
@@ -250,7 +265,10 @@ class Configuration
             return is_string($item);
         });
 
-        $this->volumes = array_unique($volumes);
+        $volumes = array_unique($volumes);
+        $volumes = [] === $volumes ? null : $volumes;
+
+        $this->volumes = $volumes;
     }
 
     /**
@@ -262,6 +280,9 @@ class Configuration
             return is_string($item);
         });
 
-        $this->tags = array_unique($tags);
+        $tags = array_unique($tags);
+        $tags = [] === $tags ? null : $tags;
+
+        $this->tags = $tags;
     }
 }

@@ -37,10 +37,10 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @param int[] $expectedSshKeys
+     * @param null|int[] $expectedSshKeys
      */
     #[DataProvider('getSshKeysDataProvider')]
-    public function testGetSshKeys(Configuration $configuration, array $expectedSshKeys): void
+    public function testGetSshKeys(Configuration $configuration, ?array $expectedSshKeys): void
     {
         self::assertSame($expectedSshKeys, $configuration->getSshKeys());
     }
@@ -55,7 +55,7 @@ class ConfigurationTest extends TestCase
         return [
             'none' => [
                 'configuration' => $factory->create(),
-                'expectedSshKeys' => [],
+                'expectedSshKeys' => null,
             ],
             'no valid' => [
                 'configuration' => $factory->create()->withSshKeys([
@@ -63,7 +63,7 @@ class ConfigurationTest extends TestCase
                     true,
                     new \stdClass(),
                 ]),
-                'expectedSshKeys' => [],
+                'expectedSshKeys' => null,
             ],
             'valid' => [
                 'configuration' => $factory->create()->withSshKeys([
@@ -79,10 +79,10 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @param string[] $expectedVolumes
+     * @param null|string[] $expectedVolumes
      */
     #[DataProvider('getVolumesDataProvider')]
-    public function testGetVolumes(Configuration $configuration, array $expectedVolumes): void
+    public function testGetVolumes(Configuration $configuration, ?array $expectedVolumes): void
     {
         self::assertSame($expectedVolumes, $configuration->getVolumes());
     }
@@ -97,7 +97,7 @@ class ConfigurationTest extends TestCase
         return [
             'none' => [
                 'configuration' => $factory->create(),
-                'expectedVolumes' => [],
+                'expectedVolumes' => null,
             ],
             'no valid' => [
                 'configuration' => $factory->create()->withVolumes([
@@ -105,7 +105,7 @@ class ConfigurationTest extends TestCase
                     true,
                     new \stdClass(),
                 ]),
-                'expectedVolumes' => [],
+                'expectedVolumes' => null,
             ],
             'valid' => [
                 'configuration' => $factory->create()->withVolumes([
@@ -121,10 +121,10 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @param string[] $expectedTags
+     * @param null|string[] $expectedTags
      */
     #[DataProvider('getTagsDataProvider')]
-    public function testGetTags(Configuration $configuration, array $expectedTags): void
+    public function testGetTags(Configuration $configuration, ?array $expectedTags): void
     {
         self::assertSame($expectedTags, $configuration->getTags());
     }
@@ -139,7 +139,7 @@ class ConfigurationTest extends TestCase
         return [
             'none' => [
                 'configuration' => $factory->create(),
-                'expectedTags' => [],
+                'expectedTags' => null,
             ],
             'no valid' => [
                 'configuration' => $factory->create()->withTags([
@@ -147,7 +147,7 @@ class ConfigurationTest extends TestCase
                     true,
                     new \stdClass(),
                 ]),
-                'expectedTags' => [],
+                'expectedTags' => null,
             ],
             'valid' => [
                 'configuration' => $factory->create()->withTags([
@@ -167,7 +167,7 @@ class ConfigurationTest extends TestCase
         $factory = new Factory();
         $configuration = $factory->create();
 
-        self::assertSame([], $configuration->getTags());
+        self::assertSame(null, $configuration->getTags());
 
         $configuration = $configuration->addTags(['one']);
         self::assertSame(['one'], $configuration->getTags());
@@ -184,7 +184,7 @@ class ConfigurationTest extends TestCase
         $factory = new Factory();
         $configuration = $factory->create();
 
-        self::assertSame('', $configuration->getUserData());
+        self::assertSame(null, $configuration->getUserData());
 
         $configuration = $configuration->appendUserData('line 1');
         self::assertSame('line 1', $configuration->getUserData());
