@@ -192,4 +192,97 @@ class ConfigurationTest extends TestCase
         $configuration = $configuration->appendUserData("\n" . 'line 2');
         self::assertSame('line 1' . "\n" . 'line 2', $configuration->getUserData());
     }
+
+    /**
+     * @param array<mixed> $expected
+     */
+    #[DataProvider('jsonSerializeDataProvider')]
+    public function testJsonSerialize(Configuration $configuration, array $expected): void
+    {
+        self::assertEquals($expected, $configuration->jsonSerialize());
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public static function jsonSerializeDataProvider(): array
+    {
+        return [
+            'name, size, image only; all empty' => [
+                'configuration' => new Configuration(
+                    name: '',
+                    size: '',
+                    image: '',
+                ),
+                'expected' => [
+                    'name' => '',
+                    'size' => '',
+                    'image' => '',
+                ],
+            ],
+            'name, size, image only; all present' => [
+                'configuration' => new Configuration(
+                    name: 'name',
+                    size: 'size',
+                    image: 'image',
+                ),
+                'expected' => [
+                    'name' => 'name',
+                    'size' => 'size',
+                    'image' => 'image',
+                ],
+            ],
+            'all present' => [
+                'configuration' => new Configuration(
+                    name: 'name',
+                    size: 'size',
+                    image: 'image',
+                    region: 'region',
+                    backups: true,
+                    ipv6: true,
+                    vpcUuid: 'vpc_uuid',
+                    sshKeys: [1, 2],
+                    userData: 'user data',
+                    monitoring: true,
+                    volumes: ['volume1', 'volume2'],
+                    tags: ['tag1', 'tag2', 'tag3'],
+                ),
+                'expected' => [
+                    'name' => 'name',
+                    'size' => 'size',
+                    'image' => 'image',
+                    'region' => 'region',
+                    'backups' => true,
+                    'ipv6' => true,
+                    'vpc_uuid' => 'vpc_uuid',
+                    'ssh_keys' => [1, 2],
+                    'user_data' => 'user data',
+                    'monitoring' => true,
+                    'volumes' => ['volume1', 'volume2'],
+                    'tags' => ['tag1', 'tag2', 'tag3'],
+                ],
+            ],
+            'all present; optional values set to those which exclude from serialization' => [
+                'configuration' => new Configuration(
+                    name: 'name',
+                    size: 'size',
+                    image: 'image',
+                    region: '',
+                    backups: false,
+                    ipv6: false,
+                    vpcUuid: '',
+                    sshKeys: [],
+                    userData: '',
+                    monitoring: false,
+                    volumes: [],
+                    tags: [],
+                ),
+                'expected' => [
+                    'name' => 'name',
+                    'size' => 'size',
+                    'image' => 'image',
+                ],
+            ],
+        ];
+    }
 }

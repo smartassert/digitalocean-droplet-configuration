@@ -2,7 +2,7 @@
 
 namespace SmartAssert\DigitalOceanDropletConfiguration;
 
-class Configuration
+class Configuration implements \JsonSerializable
 {
     /**
      * @param int[]    $sshKeys
@@ -284,5 +284,61 @@ class Configuration
         $tags = [] === $tags ? null : $tags;
 
         $this->tags = $tags;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function jsonSerialize(): array
+    {
+        $data = [
+            'name' => $this->getName(),
+            'size' => $this->getSize(),
+            'image' => $this->getImage(),
+        ];
+
+        $region = $this->getRegion();
+        if (null !== $region && '' !== $region) {
+            $data['region'] = $region;
+        }
+
+        $sshKeys = $this->getSshKeys();
+        if (null !== $sshKeys && [] !== $sshKeys) {
+            $data['ssh_keys'] = $sshKeys;
+        }
+
+        if (true === $this->getBackups()) {
+            $data['backups'] = true;
+        }
+
+        if (true === $this->getIpv6()) {
+            $data['ipv6'] = true;
+        }
+
+        $userData = $this->getUserData();
+        if (null !== $userData && '' !== $userData) {
+            $data['user_data'] = $userData;
+        }
+
+        if (true === $this->getMonitoring()) {
+            $data['monitoring'] = true;
+        }
+
+        $tags = $this->getTags();
+        if (null !== $tags && [] !== $tags) {
+            $data['tags'] = $tags;
+        }
+
+        $volumes = $this->getVolumes();
+        if (null !== $volumes && [] !== $volumes) {
+            $data['volumes'] = $volumes;
+        }
+
+        $vpcUuid = $this->getVpcUuid();
+        if (null !== $vpcUuid && '' !== $vpcUuid) {
+            $data['vpc_uuid'] = $vpcUuid;
+        }
+
+        return $data;
     }
 }
