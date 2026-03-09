@@ -11,17 +11,17 @@ class Configuration
      */
     public function __construct(
         private string $name,
-        private ?string $region,
         private string $size,
         private string $image,
-        private ?bool $backups,
-        private ?bool $ipv6,
-        private ?string $vpcUuid,
-        private ?array $sshKeys,
-        private ?string $userData,
-        private ?bool $monitoring,
-        private ?array $volumes,
-        private ?array $tags,
+        private ?string $region = null,
+        private ?bool $backups = null,
+        private ?bool $ipv6 = null,
+        private ?string $vpcUuid = null,
+        private ?array $sshKeys = null,
+        private ?string $userData = null,
+        private ?bool $monitoring = null,
+        private ?array $volumes = null,
+        private ?array $tags = null,
     ) {
         if (is_array($sshKeys)) {
             $this->setSshKeys($sshKeys);

@@ -18,9 +18,9 @@ class Factory
     public const KEY_TAGS = 'tags';
 
     private const DEFAULT_NAME = '';
-    private const DEFAULT_REGION = null;
     private const DEFAULT_SIZE = '';
     private const DEFAULT_IMAGE = '';
+    private const DEFAULT_REGION = null;
     private const DEFAULT_BACKUPS = null;
     private const DEFAULT_IPV6 = null;
     private const DEFAULT_VPC_UUID = null;
@@ -59,9 +59,9 @@ class Factory
 
         return new Configuration(
             $this->getStringValue($data, self::KEY_NAME),
-            $this->getStringValueOrNull($data, self::KEY_REGION),
             $this->getStringValue($data, self::KEY_SIZE),
             $this->getStringValue($data, self::KEY_IMAGE),
+            $this->getStringValueOrNull($data, self::KEY_REGION),
             $this->getBooleanValueOrNull($data, self::KEY_BACKUPS),
             $this->getBooleanValueOrNull($data, self::KEY_IPV6),
             $this->getVpcUuidValue($data),
