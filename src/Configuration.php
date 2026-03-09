@@ -2,6 +2,22 @@
 
 namespace SmartAssert\DigitalOceanDropletConfiguration;
 
+/**
+ * @phpstan-type SerializedConfiguration array{
+ *   'name': string,
+ *   'size': string,
+ *   'image': string,
+ *   'region'?: string,
+ *   'ssh_keys'?: int[],
+ *   'backups'?: true,
+ *   'ipv6'?: true,
+ *   'user_data'?: string,
+ *   'monitoring'?: true,
+ *   'tags'?: string[],
+ *   'volumes'?: string[],
+ *   'vpc_uuid'?: string,
+ *  }
+ */
 class Configuration implements \JsonSerializable
 {
     /**
@@ -287,7 +303,7 @@ class Configuration implements \JsonSerializable
     }
 
     /**
-     * @return array<mixed>
+     * @return SerializedConfiguration
      */
     public function jsonSerialize(): array
     {
