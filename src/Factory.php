@@ -48,8 +48,7 @@ class Factory
             self::KEY_VOLUMES => self::DEFAULT_VOLUMES,
             self::KEY_TAGS => self::DEFAULT_TAGS,
         ]
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<string, mixed> $values
@@ -77,7 +76,7 @@ class Factory
     /**
      * @param array<string, mixed> $data
      */
-    private function getVpcUuidValue(array $data): string|bool
+    private function getVpcUuidValue(array $data): bool|string
     {
         $value = $data[self::KEY_VPC_UUID] ?? false;
 
