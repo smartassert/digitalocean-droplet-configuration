@@ -5,13 +5,12 @@ namespace SmartAssert\DigitalOceanDropletConfiguration;
 class Configuration
 {
     /**
-     * @param string[] $names
      * @param int[]    $sshKeys
      * @param string[] $volumes
      * @param string[] $tags
      */
     public function __construct(
-        private array $names,
+        private string $name,
         private string $region,
         private string $size,
         private string $image,
@@ -24,18 +23,14 @@ class Configuration
         private array $volumes,
         private array $tags,
     ) {
-        $this->setNames($names);
         $this->setSshKeys($sshKeys);
         $this->setVolumes($volumes);
         $this->setTags($tags);
     }
 
-    /**
-     * @return string[]
-     */
-    public function getNames(): array
+    public function getName(): string
     {
-        return $this->names;
+        return $this->name;
     }
 
     public function getRegion(): string
@@ -102,13 +97,10 @@ class Configuration
         return $this->tags;
     }
 
-    /**
-     * @param array<mixed> $names
-     */
-    public function withNames(array $names): self
+    public function withName(string $name): self
     {
         $new = clone $this;
-        $new->setNames($names);
+        $new->name = $name;
 
         return $new;
     }
@@ -271,17 +263,5 @@ class Configuration
         });
 
         $this->tags = array_unique($tags);
-    }
-
-    /**
-     * @param array<mixed> $names
-     */
-    private function setNames(array $names): void
-    {
-        $names = array_filter($names, function ($item) {
-            return is_string($item);
-        });
-
-        $this->names = array_unique($names);
     }
 }

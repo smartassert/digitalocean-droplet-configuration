@@ -11,44 +11,27 @@ use SmartAssert\DigitalOceanDropletConfiguration\Factory;
 
 class ConfigurationTest extends TestCase
 {
-    /**
-     * @param array<mixed> $expectedNames
-     */
-    #[DataProvider('getNamesDataProvider')]
-    public function testGetNames(Configuration $configuration, array $expectedNames): void
+    #[DataProvider('getNameDataProvider')]
+    public function testGetName(Configuration $configuration, string $expectedName): void
     {
-        self::assertSame($expectedNames, $configuration->getNames());
+        self::assertSame($expectedName, $configuration->getName());
     }
 
     /**
      * @return array<mixed>
      */
-    public static function getNamesDataProvider(): array
+    public static function getNameDataProvider(): array
     {
         $factory = new Factory();
 
         return [
             'none' => [
                 'configuration' => $factory->create(),
-                'expectedNames' => [],
-            ],
-            'no valid' => [
-                'configuration' => $factory->create()->withNames([
-                    1,
-                    true,
-                    new \stdClass(),
-                ]),
-                'expectedNames' => [],
+                'expectedName' => '',
             ],
             'valid' => [
-                'configuration' => $factory->create()->withNames([
-                    'one',
-                    'two',
-                ]),
-                'expectedNames' => [
-                    'one',
-                    'two',
-                ],
+                'configuration' => $factory->create()->withName('one'),
+                'expectedName' => 'one',
             ],
         ];
     }

@@ -30,7 +30,7 @@ class FactoryTest extends TestCase
                 'factory' => new Factory(),
                 'values' => [],
                 'expectedConfiguration' => new Configuration(
-                    [],
+                    '',
                     '',
                     '',
                     '',
@@ -46,7 +46,7 @@ class FactoryTest extends TestCase
             ],
             'non-default, no values' => [
                 'factory' => new Factory([
-                    Factory::KEY_NAMES => ['name1', 'name2'],
+                    Factory::KEY_NAME => 'name1',
                     Factory::KEY_REGION => 'custom-region',
                     Factory::KEY_SIZE => 'custom-size',
                     Factory::KEY_IMAGE => 'custom-image',
@@ -61,7 +61,7 @@ class FactoryTest extends TestCase
                 ]),
                 'values' => [],
                 'expectedConfiguration' => new Configuration(
-                    ['name1', 'name2'],
+                    'name1',
                     'custom-region',
                     'custom-size',
                     'custom-image',
@@ -78,7 +78,7 @@ class FactoryTest extends TestCase
             'default, has values' => [
                 'factory' => new Factory(),
                 'values' => [
-                    Factory::KEY_NAMES => ['name1', 'name2'],
+                    Factory::KEY_NAME => 'name1',
                     Factory::KEY_REGION => 'custom-region',
                     Factory::KEY_SIZE => 'custom-size',
                     Factory::KEY_IMAGE => 'custom-image',
@@ -92,7 +92,7 @@ class FactoryTest extends TestCase
                     Factory::KEY_TAGS => ['tag1', 'tag2'],
                 ],
                 'expectedConfiguration' => new Configuration(
-                    ['name1', 'name2'],
+                    'name1',
                     'custom-region',
                     'custom-size',
                     'custom-image',
@@ -108,7 +108,7 @@ class FactoryTest extends TestCase
             ],
             'non-default, has values' => [
                 'factory' => new Factory([
-                    Factory::KEY_NAMES => ['name1', 'name2'],
+                    Factory::KEY_NAME => 'name1',
                     Factory::KEY_REGION => 'custom-region',
                     Factory::KEY_SIZE => 'custom-size',
                     Factory::KEY_IMAGE => 'custom-image',
@@ -122,7 +122,7 @@ class FactoryTest extends TestCase
                     Factory::KEY_TAGS => ['tag1', 'tag2'],
                 ]),
                 'values' => [
-                    Factory::KEY_NAMES => ['name3'],
+                    Factory::KEY_NAME => 'name3',
                     Factory::KEY_REGION => 'override-region',
                     Factory::KEY_SIZE => 'override-size',
                     Factory::KEY_IMAGE => 'override-image',
@@ -136,7 +136,7 @@ class FactoryTest extends TestCase
                     Factory::KEY_TAGS => ['tag3'],
                 ],
                 'expectedConfiguration' => new Configuration(
-                    ['name3'],
+                    'name3',
                     'override-region',
                     'override-size',
                     'override-image',
@@ -154,7 +154,7 @@ class FactoryTest extends TestCase
                 'factory' => new Factory(),
                 'values' => [],
                 'expectedConfiguration' => new Configuration(
-                    [],
+                    '',
                     '',
                     '',
                     '',
@@ -172,7 +172,7 @@ class FactoryTest extends TestCase
                 'factory' => new Factory([]),
                 'values' => [],
                 'expectedConfiguration' => new Configuration(
-                    [],
+                    '',
                     '',
                     '',
                     '',
