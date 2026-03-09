@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\DigitalOceanDropletConfiguration\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\DigitalOceanDropletConfiguration\Configuration;
 use SmartAssert\DigitalOceanDropletConfiguration\Factory;
@@ -12,9 +13,8 @@ class FactoryTest extends TestCase
 {
     /**
      * @param array<string, mixed> $values
-     *
-     * @dataProvider createDataProvider
      */
+    #[DataProvider('createDataProvider')]
     public function testCreate(Factory $factory, array $values, Configuration $expectedConfiguration): void
     {
         self::assertEquals($expectedConfiguration, $factory->create($values));
@@ -23,7 +23,7 @@ class FactoryTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function createDataProvider(): array
+    public static function createDataProvider(): array
     {
         return [
             'default, no values' => [

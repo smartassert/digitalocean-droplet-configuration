@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SmartAssert\DigitalOceanDropletConfiguration\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SmartAssert\DigitalOceanDropletConfiguration\Configuration;
 use SmartAssert\DigitalOceanDropletConfiguration\Factory;
@@ -11,10 +12,9 @@ use SmartAssert\DigitalOceanDropletConfiguration\Factory;
 class ConfigurationTest extends TestCase
 {
     /**
-     * @dataProvider getNamesDataProvider
-     *
      * @param array<mixed> $expectedNames
      */
+    #[DataProvider('getNamesDataProvider')]
     public function testGetNames(Configuration $configuration, array $expectedNames): void
     {
         self::assertSame($expectedNames, $configuration->getNames());
@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getNamesDataProvider(): array
+    public static function getNamesDataProvider(): array
     {
         $factory = new Factory();
 
@@ -54,10 +54,9 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @dataProvider getSshKeysDataProvider
-     *
      * @param int[] $expectedSshKeys
      */
+    #[DataProvider('getSshKeysDataProvider')]
     public function testGetSshKeys(Configuration $configuration, array $expectedSshKeys): void
     {
         self::assertSame($expectedSshKeys, $configuration->getSshKeys());
@@ -66,7 +65,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getSshKeysDataProvider(): array
+    public static function getSshKeysDataProvider(): array
     {
         $factory = new Factory();
 
@@ -97,10 +96,9 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @dataProvider getVolumesDataProvider
-     *
      * @param string[] $expectedVolumes
      */
+    #[DataProvider('getVolumesDataProvider')]
     public function testGetVolumes(Configuration $configuration, array $expectedVolumes): void
     {
         self::assertSame($expectedVolumes, $configuration->getVolumes());
@@ -109,7 +107,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getVolumesDataProvider(): array
+    public static function getVolumesDataProvider(): array
     {
         $factory = new Factory();
 
@@ -140,10 +138,9 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * @dataProvider getTagsDataProvider
-     *
      * @param string[] $expectedTags
      */
+    #[DataProvider('getTagsDataProvider')]
     public function testGetTags(Configuration $configuration, array $expectedTags): void
     {
         self::assertSame($expectedTags, $configuration->getTags());
@@ -152,7 +149,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function getTagsDataProvider(): array
+    public static function getTagsDataProvider(): array
     {
         $factory = new Factory();
 
