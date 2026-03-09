@@ -18,17 +18,17 @@ class Factory
     public const KEY_TAGS = 'tags';
 
     private const DEFAULT_NAME = '';
-    private const DEFAULT_REGION = '';
+    private const DEFAULT_REGION = null;
     private const DEFAULT_SIZE = '';
     private const DEFAULT_IMAGE = '';
-    private const DEFAULT_BACKUPS = false;
-    private const DEFAULT_IPV6 = false;
-    private const DEFAULT_VPC_UUID = false;
-    private const DEFAULT_SSH_KEYS = [];
-    private const DEFAULT_USER_DATA = '';
-    private const DEFAULT_MONITORING = true;
-    private const DEFAULT_VOLUMES = [];
-    private const DEFAULT_TAGS = [];
+    private const DEFAULT_BACKUPS = null;
+    private const DEFAULT_IPV6 = null;
+    private const DEFAULT_VPC_UUID = null;
+    private const DEFAULT_SSH_KEYS = null;
+    private const DEFAULT_USER_DATA = null;
+    private const DEFAULT_MONITORING = null;
+    private const DEFAULT_VOLUMES = null;
+    private const DEFAULT_TAGS = null;
 
     /**
      * @param array<string, mixed> $defaults
@@ -59,64 +59,64 @@ class Factory
 
         return new Configuration(
             $this->getStringValue($data, self::KEY_NAME),
-            $this->getStringValue($data, self::KEY_REGION),
+            $this->getStringValueOrNull($data, self::KEY_REGION),
             $this->getStringValue($data, self::KEY_SIZE),
             $this->getStringValue($data, self::KEY_IMAGE),
-            $this->getBooleanValue($data, self::KEY_BACKUPS),
-            $this->getBooleanValue($data, self::KEY_IPV6),
+            $this->getBooleanValueOrNull($data, self::KEY_BACKUPS),
+            $this->getBooleanValueOrNull($data, self::KEY_IPV6),
             $this->getVpcUuidValue($data),
             $this->getSshKeyValues($data),
-            $this->getStringValue($data, self::KEY_USER_DATA),
-            $this->getBooleanValue($data, self::KEY_MONITORING, true),
-            $this->getStringValues($data, self::KEY_VOLUMES),
-            $this->getStringValues($data, self::KEY_TAGS),
+            $this->getStringValueOrNull($data, self::KEY_USER_DATA),
+            $this->getBooleanValueOrNull($data, self::KEY_MONITORING),
+            $this->getStringValuesOrNull($data, self::KEY_VOLUMES),
+            $this->getStringValuesOrNull($data, self::KEY_TAGS),
         );
     }
 
     /**
      * @param array<string, mixed> $data
      */
-    private function getVpcUuidValue(array $data): bool|string
+    private function getVpcUuidValue(array $data): ?string
     {
         $value = $data[self::KEY_VPC_UUID] ?? false;
-
-        if (is_bool($value)) {
-            return $value;
-        }
 
         if (is_string($value)) {
             return $value;
         }
 
-        return false;
+        return null;
     }
 
     /**
      * @param array<string, mixed> $data
      *
-     * @return string[]
+     * @return null|string[]
      */
-    private function getStringValues(array $data, string $key): array
+    private function getStringValuesOrNull(array $data, string $key): ?array
     {
         $values = $this->getValues($data, $key);
 
-        return array_filter($values, function ($item) {
+        $values = array_filter($values, function ($item) {
             return is_string($item);
         });
+
+        return [] === $values ? null : $values;
     }
 
     /**
      * @param array<string, mixed> $data
      *
-     * @return int[]
+     * @return null|int[]
      */
-    private function getSshKeyValues(array $data): array
+    private function getSshKeyValues(array $data): ?array
     {
         $values = $this->getValues($data, self::KEY_SSH_KEYS);
 
-        return array_filter($values, function ($item) {
+        $values = array_filter($values, function ($item) {
             return is_int($item);
         });
+
+        return [] === $values ? null : $values;
     }
 
     /**
@@ -152,18 +152,20 @@ class Factory
     /**
      * @param array<string, mixed> $data
      */
-    private function getBooleanValue(array $data, string $key, bool $default = false): bool
+    private function getStringValueOrNull(array $data, string $key): ?string
     {
         $value = $data[$key] ?? null;
 
-        if (is_bool($value)) {
-            return $value;
-        }
+        return is_string($value) ? $value : null;
+    }
 
-        if (is_scalar($value)) {
-            return (bool) $value;
-        }
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function getBooleanValueOrNull(array $data, string $key): ?bool
+    {
+        $value = $data[$key] ?? null;
 
-        return $default;
+        return is_bool($value) ? $value : null;
     }
 }
