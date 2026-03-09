@@ -4,7 +4,7 @@ namespace SmartAssert\DigitalOceanDropletConfiguration;
 
 class Factory
 {
-    public const KEY_NAMES = 'names';
+    public const KEY_NAME = 'name';
     public const KEY_REGION = 'region';
     public const KEY_SIZE = 'size';
     public const KEY_IMAGE = 'image';
@@ -17,7 +17,7 @@ class Factory
     public const KEY_VOLUMES = 'volumes';
     public const KEY_TAGS = 'tags';
 
-    private const DEFAULT_NAMES = [];
+    private const DEFAULT_NAME = '';
     private const DEFAULT_REGION = '';
     private const DEFAULT_SIZE = '';
     private const DEFAULT_IMAGE = '';
@@ -35,7 +35,7 @@ class Factory
      */
     public function __construct(
         private array $defaults = [
-            self::KEY_NAMES => self::DEFAULT_NAMES,
+            self::KEY_NAME => self::DEFAULT_NAME,
             self::KEY_REGION => self::DEFAULT_REGION,
             self::KEY_SIZE => self::DEFAULT_SIZE,
             self::KEY_IMAGE => self::DEFAULT_IMAGE,
@@ -58,7 +58,7 @@ class Factory
         $data = array_merge($this->defaults, $values);
 
         return new Configuration(
-            $this->getStringValues($data, self::KEY_NAMES),
+            $this->getStringValue($data, self::KEY_NAME),
             $this->getStringValue($data, self::KEY_REGION),
             $this->getStringValue($data, self::KEY_SIZE),
             $this->getStringValue($data, self::KEY_IMAGE),
